@@ -1,14 +1,14 @@
 "use client"
 import { SignedIn } from '@clerk/nextjs'
 import React from 'react'
-// import SideNav from './_components/SideNav'
+import SideNav from './_components/SideNav'
 
 function DashboardLayout({ children }) {
     return (
         <SignedIn>
             <div>
                 <div className='md:w-64 fixed'>
-                    {/* <SideNav /> */}
+                    <SideNav />
                 </div>
                 <div className='md:ml-64'>
                     {children}
