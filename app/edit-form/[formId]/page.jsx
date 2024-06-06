@@ -61,6 +61,8 @@ function EditForm({ params }) {
   const [jsonForm, setJsonForm] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [updateTrigger, setUpdateTrigger] = useState();
+  const [record, setRecord] = useState([])
 
   useEffect(() => {
     if (user) {
@@ -71,7 +73,11 @@ function EditForm({ params }) {
   const GetFormData = async () => {
     try {
       const result = await db.select().from(JsonForms)
-        .where(and(eq(JsonForms.id, params?.formId), eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)));
+        .where(and(eq(JsonForms.id, params?.formId), 
+        eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)));
+
+        setRecord(result[0])
+        setJsonForm(JSON.parse(result[0].jsonform))
 
       if (result && result.length > 0) {
         const parsedForm = JSON.parse(result[0].jsonform);
@@ -85,6 +91,28 @@ function EditForm({ params }) {
     } finally {
       setLoading(false);
     }
+  }
+
+  useEffect(() => {
+    if(updateTrigger)
+      {
+        setJsonForm(jsonForm);
+        updateJsonFormInDb();
+      }
+  }, [updateTrigger])
+
+  const onFieldUpdate = (value, index) => {
+    jsonForm.fields[index].label = value.label
+    jsonForm.fields[index].placeholder = value.placeholder
+    setUpdateTrigger(Date.now)
+  }
+
+  const updateJsonFormInDb = async () => {
+    const result = await db.update(JsonForms)
+    .set({
+      jsonform: jsonForm
+    }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)) )
+    console.log("JsonForm Update Result", result);
   }
 
   return (
@@ -101,7 +129,9 @@ function EditForm({ params }) {
           {loading ? (
             <Loader2 className='animate-spin' />
           ) : (
-            jsonForm && <FormUi jsonForm={jsonForm} />
+            jsonForm && <FormUi jsonForm={jsonForm} 
+            onFieldUpdate={onFieldUpdate}
+            />
           )}
         </div>
       </div>
