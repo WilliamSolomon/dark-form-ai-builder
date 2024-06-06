@@ -15,7 +15,7 @@ import FieldEdit from "./FieldEdit"
 
 
 
-function FormUi({ jsonForm, onFieldUpdate }) {
+function FormUi({ jsonForm, onFieldUpdate, deleteField }) {
 
     return (
         <div className='border p-5 md:w-[37.5rem] rounded-lg'>
@@ -93,6 +93,7 @@ function FormUi({ jsonForm, onFieldUpdate }) {
 
                         <FieldEdit defaultValue = {field} 
                         onUpdate={(value) => onFieldUpdate(value, index)}
+                        deleteField={()=>deleteField(index)}
                         />
                     </div>
                 </div>

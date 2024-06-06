@@ -55,6 +55,7 @@ import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import FormUi from '../_components/FormUi'
+import { toast } from 'sonner'
 
 function EditForm({ params }) {
   const { user } = useUser()
@@ -112,7 +113,15 @@ function EditForm({ params }) {
     .set({
       jsonform: jsonForm
     }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)) )
-    console.log("JsonForm Update Result", result);
+    toast(`${jsonForm.form_title} Form Updated!`)
+  }
+
+  const deleteField = (indexToRemove) => {
+    const result = jsonForm.fields.filter((item,index) => index != indexToRemove)
+    console.log("Delete Result:", result)
+
+    jsonForm.fields=result;
+    setUpdateTrigger(Date.now);
   }
 
   return (
@@ -131,6 +140,7 @@ function EditForm({ params }) {
           ) : (
             jsonForm && <FormUi jsonForm={jsonForm} 
             onFieldUpdate={onFieldUpdate}
+            deleteField={(index)=>deleteField(index)}
             />
           )}
         </div>
