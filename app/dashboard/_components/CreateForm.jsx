@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 
 
-const testPrompt = "Based on the information above, create provide a form in JSON format. It should include a form title and form subheading. Include the following fields,form name, placeholder, name, and form label, fieldtype, field required. The response object's .text should exclude anything except the JSON object, starting with { and ending with }"
+const testPrompt = "Based on the information above, create provide a form in JSON format. It should include a formTitle and formSubheading. Include the following properties for each field name, placeholder, label, fieldtype, required. The response object's .text should exclude anything except the JSON object, starting with { and ending with }"
 
 function CreateForm() {
     const [openDialog, setOpenDialog] = useState(false)
