@@ -10,12 +10,12 @@ import {
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
+import FieldEdit from "./FieldEdit" 
 
 
 
 
-function FormUi({ jsonForm }) {
-    console.log("jsonForm data:", jsonForm.fields);
+function FormUi({ jsonForm, onFieldUpdate }) {
 
     return (
         <div className='border p-5 md:w-[37.5rem] rounded-lg'>
@@ -24,9 +24,9 @@ function FormUi({ jsonForm }) {
 
             {jsonForm?.fields.map((field, index) => (
 
-                <div key={index} >
+                <div key={index} className='flex items-center gap-2' >
                     {field.field_type == 'select' ?
-                        <div className="my-3">
+                        <div className="my-3 w-full">
                             <label className="text-sm text-gray-500">{field.label}</label>
                             <Select>
                                 <SelectTrigger className="w-full">
@@ -41,7 +41,7 @@ function FormUi({ jsonForm }) {
                         </div>
 
                         : field.field_type == 'radio' ?
-                            <div className="my-3">
+                            <div className="my-3 w-full">
                                 <label className="text-sm text-gray-500">{field.label}</label>
                                 <RadioGroup>
                                     {/* <RadioGroup defaultValue={option.label}> */}
@@ -62,7 +62,7 @@ function FormUi({ jsonForm }) {
 
                                 field.options ? (
                                     // Code to run if field.options is present
-                                    <div className="my-3">
+                                    <div className="my-3 w-full">
                                         <label className="text-sm text-gray-500 gap-2">{field.label}</label>
                                         {field.options.map((item, index) => (
                                             <div key={index} className="flex items-center space-x-2">
@@ -75,13 +75,11 @@ function FormUi({ jsonForm }) {
                                         ))}
                                     </div>
                                 )
-                                    : <div className="flex my-3 gap-2">
+                                    : <div className="flex my-3 gap-2 w-full">
                                         <Checkbox className="gap-2" />
                                         <label className="text-sm text-gray-500 gap-2">{field.label}</label>
                                     </div>
-
-
-                                : <div key={index} className="my-3 items-center">
+                                : <div key={index} className="my-3 items-center w-full">
                                     <label htmlFor={field.name} className="text-sm text-gray-500">{field.label}</label>
                                     <Input
                                         type={field.field_type}
@@ -91,6 +89,12 @@ function FormUi({ jsonForm }) {
                                     />
                                 </div>
                     }
+                    <div>
+
+                        <FieldEdit defaultValue = {field} 
+                        onUpdate={(value) => onFieldUpdate(value, index)}
+                        />
+                    </div>
                 </div>
             ))
             }
