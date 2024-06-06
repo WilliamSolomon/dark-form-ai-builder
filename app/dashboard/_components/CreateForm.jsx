@@ -14,31 +14,37 @@ import { useUser } from '@clerk/nextjs'
 import { JsonForms } from '@/configs/schema'
 import { db } from '@/configs/index'
 import moment from 'moment/moment'
+import { useRouter } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
 
-const testPrompt = `Description: provide a student registration form for a coding workshop on react and react native. On the basis of this description, please provide a form in JSON format format with a form title and form subheading. Include the following fields: 
-form name, placeholder, name, and form label, fieldtype, field required. Again, in json format.`
+
+const testPrompt = "Based on the information above, create provide a form in JSON format. It should include a form title and form subheading. Include the following fields,form name, placeholder, name, and form label, fieldtype, field required. The response object's .text should exclude anything except the JSON object, starting with { and ending with }"
 
 function CreateForm() {
     const [openDialog, setOpenDialog] = useState(false)
     const [userInput, setUserInput] = useState();
     const [loading, setLoading] = useState();
-    const {user}=useUser();
+    const { user } = useUser();
+    const route = useRouter();
+
 
     const onCreateForm = async () => {
         console.log(userInput)
         setLoading(true)
         const result = await AIChatSession.sendMessage("Description:" + userInput + testPrompt);
-        console.log(result.response.text());
-        if (result.response.text()) 
-        {
-            const resp=await db.insert(JsonForms)
-            .values({
-                jsonform:result.response.text(),
-                createdBy:user?.primaryEmailAddress?.emailAddress,
-                createdAt:moment().format('DD/MM/YYYY')
+        console.log("result.response.text()", result.response.text());
+        if (result.response.text()) {
+            const resp = await db.insert(JsonForms)
+                .values({
+                    jsonform: result.response.text(),
+                    createdBy: user?.primaryEmailAddress?.emailAddress,
+                    createdAt: moment().format('DD/MM/YYYY')
 
-            }).returning({id:JsonForms.id})
-            console.log("New Form ID",resp[0].id)
+                }).returning({ id: JsonForms.id })
+            console.log("New Form ID", resp[0].id)
+            if (resp[0].id) {
+                route.push('/edit-form/' + resp[0].id)
+            }
             setLoading(false)
         }
         setLoading(false)
@@ -61,7 +67,11 @@ function CreateForm() {
                                 >Cancel</Button>
                                 <Button
                                     disabled={loading}
-                                    onClick={() => onCreateForm()}>Create</Button>
+                                    onClick={() => onCreateForm()}>
+                                    {loading ?
+                                        <Loader2 className='animate-spin'/> : 'Create'
+                                    }
+                                </Button>
                             </div>
                         </DialogDescription>
                     </DialogHeader>
