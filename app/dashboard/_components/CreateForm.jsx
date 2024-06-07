@@ -18,7 +18,99 @@ import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 
 
-const testPrompt = "Based on the information above, create provide a form in JSON format. It should include a form_Title and form_Subheading. Include the following properties for each field: name, placeholder, label, field_type, required. The response object's. The response should exclude anything except the JSON object, starting with { and ending with }"
+const guidingPrompt = `
+    Based on this user's description(UserInput), generate a form in JSON format. The form should include a form_title and form_subheading. For each field, include the following properties: name, placeholder, label, field_type, and required. Ensure the response excludes anything except the JSON object, starting with { and ending with }. Example descriptions could include 'little league signup' or 'company job application'. Here is an example of the required format:
+
+    {
+        "form_title": "Star Fleet Academy Signup",
+        "form_subheading": "Embark on a journey to the stars!",
+        "fields": [
+        {
+            "name": "first_name",
+            "placeholder": "Enter your first name",
+            "label": "First Name",
+            "field_type": "text",
+            "required": true
+        },
+        {
+            "name": "last_name",
+            "placeholder": "Enter your last full name",
+            "label": "Last Full Name",
+            "field_type": "text",
+            "required": true
+        },
+        {
+            "name": "email",
+            "placeholder": "Enter your email address",
+            "label": "Email",
+            "field_type": "email",
+            "required": true
+        },
+        {
+            "name": "phone_number",
+            "placeholder": "Enter your phone number",
+            "label": "Phone Number",
+            "field_type": "tel",
+            "required": true
+        },
+        {
+            "name": "birthdate",
+            "placeholder": "Enter your birthdate (YYYY-MM-DD)",
+            "label": "Birthdate",
+            "field_type": "date",
+            "required": true
+        },
+        {
+            "name": "preferred_species",
+            "placeholder": "Select your preferred species",
+            "label": "Preferred Species",
+            "field_type": "checkbox",
+            "options": [
+            "Human",
+            "Vulcan",
+            "Andorian",
+            "Tellarite",
+            "Klingon"
+            ],
+            "required": true
+        },
+        {
+            "name": "academic_interests",
+            "placeholder": "Select your academic interests",
+            "label": "Academic Interests",
+            "field_type": "radio",
+            "options": [
+            "Astrophysics",
+            "Xenobiology",
+            "Tactical Warfare",
+            "Engineering",
+            "Medicine"
+        ],
+            "required": true
+        },
+        {
+            "name": "emergency_contact_name",
+            "placeholder": "Enter your emergency contact's name",
+            "label": "Emergency Contact Name",
+            "field_type": "text",
+            "required": true
+        },
+        {
+            "name": "emergency_contact_phone",
+            "placeholder": "Enter your emergency contact's phone number",
+            "label": "Emergency Contact Phone",
+            "field_type": "tel",
+            "required": true
+        },
+        {
+            "name": "agree_to_terms",
+            "label": "I agree to the Star Fleet Academy terms and conditions",
+            "field_type": "checkbox",
+            "required": true
+        }
+        ]
+    }
+    `
 
 function CreateForm() {
     const [openDialog, setOpenDialog] = useState(false)
@@ -31,7 +123,7 @@ function CreateForm() {
     const onCreateForm = async () => {
         console.log(userInput)
         setLoading(true)
-        const result = await AIChatSession.sendMessage("Description:" + userInput + testPrompt);
+        const result = await AIChatSession.sendMessage("UserInput: " + userInput + guidingPrompt);
         console.log("result.response.text()", result.response.text());
         if (result.response.text()) {
             const resp = await db.insert(JsonForms)
@@ -69,7 +161,7 @@ function CreateForm() {
                                     disabled={loading}
                                     onClick={() => onCreateForm()}>
                                     {loading ?
-                                        <Loader2 className='animate-spin'/> : 'Create'
+                                        <Loader2 className='animate-spin' /> : 'Create'
                                     }
                                 </Button>
                             </div>
