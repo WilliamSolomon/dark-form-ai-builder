@@ -15,7 +15,7 @@ import FieldEdit from "./FieldEdit"
 
 
 
-function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
+function FormUi({ jsonForm,onFieldUpdate,deleteField,selectedTheme }) {
 
     return (
         <div className='border p-5 md:w-[37.5rem] rounded-lg ' data-theme={selectedTheme} >
