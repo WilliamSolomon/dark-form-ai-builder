@@ -15,14 +15,14 @@ import FieldEdit from "./FieldEdit"
 
 
 
-function FormUi({ jsonForm, onFieldUpdate, deleteField }) {
+function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
 
     return (
-        <div className='border p-5 md:w-[37.5rem] rounded-lg'>
+        <div className='border p-5 md:w-[37.5rem] rounded-lg ' data-theme={selectedTheme} >
             <h2 className='font-bold text-center text-2xl'>{jsonForm?.form_title}</h2>
             <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.form_subheading}</h2>
 
-            {jsonForm?.fields.map((field, index) => (
+            {jsonForm?.fields.map(( field,index ) => (
 
                 <div key={index} className='flex items-center gap-2' >
                     {field.field_type == 'select' ?
@@ -97,8 +97,8 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField }) {
                         />
                     </div>
                 </div>
-            ))
-            }
+            ))}
+            <button className='btn btn-primary'>Submit</button>
         </div >
     )
 }
