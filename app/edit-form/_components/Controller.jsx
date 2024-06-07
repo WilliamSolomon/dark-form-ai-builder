@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Select,
     SelectContent,
@@ -7,12 +7,26 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import Themes from '../../_data/Themes'
+import GradientBg from '../../_data/GradientBg'
+import { Button } from '@/components/ui/button'
 
 
-function Controller({ selectedTheme }) {
+function Controller({ selectedTheme,selectedBackground }) {
+    const [indexLimit, setIndexLimit] = useState(6)
+
+    const clickHandlerShowMore = () => {
+        setIndexLimit(indexLimit + 6);
+    };
+
+    const clickHandlerShowLess = () => {
+        setIndexLimit(indexLimit - 6);
+    };
+
     return (
         <section>
-            <h2 className='my-1'>Selected Theme</h2>
+
+            {/* Theme selection controller */}
+            <h2 className='my-1'>Theme</h2>
 
             <Select onValueChange={(themeValue) => selectedTheme(themeValue)}>
                 <SelectTrigger className="w-full">
@@ -44,6 +58,47 @@ function Controller({ selectedTheme }) {
                 </SelectContent>
             </Select>
 
+            {/* Background selection controller */}
+            <h2 className='mt-8 my-1'>Background</h2>
+            <div className='grid grid-cols-3 gap-5'>
+
+                {GradientBg.map(( bg,index ) =>
+                    (index < indexLimit) &&
+                    (
+                        <div key={index} 
+                        onClick={() => selectedBackground(bg.gradient)}
+                        className='w-full h-[4.5rem] rounded-lg
+                                hover:border-2 hover:border-black
+                                flex items-center justify-center cursor-pointer
+                                '
+                            style={{ background: bg.gradient }}
+                        >
+                            {index === 0 && 'None'}
+                        </div>
+                    ))}
+            </div>
+            {GradientBg.length > 6 && (
+                <div className="w-full my-3 flex justify-center">
+                    {indexLimit > 6 && (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mx-1"
+                            onClick={clickHandlerShowLess}
+                        >
+                            Show Less
+                        </Button>
+                    )}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mx-1"
+                        onClick={clickHandlerShowMore}
+                    >
+                        Show More
+                    </Button>
+                </div>
+            )}
         </section>
     )
 }

@@ -19,8 +19,9 @@ function EditForm({ params }) {
   const router = useRouter();
   const [updateTrigger, setUpdateTrigger] = useState();
   const [record, setRecord] = useState([])
-  const [selectedTheme, setSelectedTheme] = useState('light');
 
+  const [selectedTheme, setSelectedTheme] = useState('light');
+  const [selectedBackground, setSelectedBackground] = useState();
 
   useEffect(() => {
     if (user) {
@@ -89,9 +90,16 @@ function EditForm({ params }) {
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
         <div className='p-5 border rounded-lg shadow-md'>
-          <Controller selectedTheme={(themeValue)=>setSelectedTheme(themeValue)} />
+          <Controller 
+          selectedTheme={(themeValue)=>setSelectedTheme(themeValue)} 
+          selectedBackground={(backgroundValue)=>setSelectedBackground(backgroundValue)}
+          />
         </div>
-        <div className='md:col-span-2 border rounded-lg p-5 flex items-center justify-center'>
+
+        <div className='md:col-span-2 border rounded-lg p-5
+        flex items-center justify-center'
+        style={{backgroundImage:selectedBackground}}
+        >
           {loading ? (
             <Loader2 className='animate-spin' />
           ) : (
