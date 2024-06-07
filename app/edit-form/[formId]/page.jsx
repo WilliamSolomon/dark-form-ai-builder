@@ -32,15 +32,15 @@ function EditForm({ params }) {
   const GetFormData = async () => {
     try {
       const result = await db.select().from(JsonForms)
-        .where(and(eq(JsonForms.id, params?.formId), 
-        eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)));
+        .where(and(eq(JsonForms.id, params?.formId),
+          eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)));
 
-        setRecord(result[0])
-        setJsonForm(JSON.parse(result[0].jsonform))
+      setRecord(result[0])
+      setJsonForm(JSON.parse(result[0].jsonform))
+      setSelectedBackground(result[0].background)
 
       if (result && result.length > 0) {
         const parsedForm = JSON.parse(result[0].jsonform);
-        console.log("Fetched JSON form data:", parsedForm);
         setJsonForm(parsedForm);
       } else {
         console.log("No form data found");
@@ -53,11 +53,10 @@ function EditForm({ params }) {
   }
 
   useEffect(() => {
-    if(updateTrigger)
-      {
-        setJsonForm(jsonForm);
-        updateJsonFormInDb();
-      }
+    if (updateTrigger) {
+      setJsonForm(jsonForm);
+      updateJsonFormInDb();
+    }
   }, [updateTrigger])
 
   const onFieldUpdate = (value, index) => {
@@ -68,18 +67,30 @@ function EditForm({ params }) {
 
   const updateJsonFormInDb = async () => {
     const result = await db.update(JsonForms)
-    .set({
-      jsonform: jsonForm
-    }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)) )
+      .set({
+        jsonform: jsonForm
+      }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)))
+      .returning({ id: JsonForms.id })
+
     toast(`${jsonForm.form_title} Form Updated!`)
   }
 
   const deleteField = (indexToRemove) => {
-    const result = jsonForm.fields.filter((item,index) => index != indexToRemove)
+    const result = jsonForm.fields.filter((item, index) => index != indexToRemove)
     console.log("Delete Result:", result)
 
-    jsonForm.fields=result;
+    jsonForm.fields = result;
     setUpdateTrigger(Date.now);
+  }
+
+  const updatedControllerFields = async (value, columnName) => {
+    const result = await db.update(JsonForms).set({
+      [columnName]: value
+    }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)))
+      .returning({ id: JsonForms.id })
+
+    toast(`${columnName.charAt(0).toUpperCase() + columnName.slice(1)
+    } Updated!`)
   }
 
   return (
@@ -90,23 +101,30 @@ function EditForm({ params }) {
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
         <div className='p-5 border rounded-lg shadow-md'>
-          <Controller 
-          selectedTheme={(themeValue)=>setSelectedTheme(themeValue)} 
-          selectedBackground={(backgroundValue)=>setSelectedBackground(backgroundValue)}
+          <Controller
+            selectedTheme={(themeValue) => {
+              updatedControllerFields(themeValue, 'theme');
+              setSelectedTheme(themeValue);
+            }}
+            selectedBackground={(backgroundValue) => {
+              updatedControllerFields(backgroundValue, 'background');
+              setSelectedBackground(backgroundValue)
+            }}
           />
         </div>
 
         <div className='md:col-span-2 border rounded-lg p-5
         flex items-center justify-center'
-        style={{backgroundImage:selectedBackground}}
+          style={{ backgroundImage: selectedBackground }}
         >
           {loading ? (
             <Loader2 className='animate-spin' />
           ) : (
-            jsonForm && <FormUi jsonForm={jsonForm} 
-            onFieldUpdate={onFieldUpdate}
-            deleteField={(index)=>deleteField(index)}
-            selectedTheme={selectedTheme}
+            jsonForm && <FormUi jsonForm={jsonForm}
+              onFieldUpdate={onFieldUpdate}
+              deleteField={(index) => deleteField(index)}
+              selectedTheme={selectedTheme}
+              
             />
           )}
         </div>
