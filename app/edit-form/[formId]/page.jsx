@@ -22,6 +22,7 @@ function EditForm({ params }) {
 
   const [selectedTheme, setSelectedTheme] = useState('light');
   const [selectedBackground, setSelectedBackground] = useState();
+  const [selectedStyle, setSelectedStyle] = useState();
 
   useEffect(() => {
     if (user) {
@@ -38,6 +39,7 @@ function EditForm({ params }) {
       setRecord(result[0])
       setJsonForm(JSON.parse(result[0].jsonform))
       setSelectedBackground(result[0].background)
+      setSelectedTheme(result[0].theme)
 
       if (result && result.length > 0) {
         const parsedForm = JSON.parse(result[0].jsonform);
@@ -106,6 +108,7 @@ function EditForm({ params }) {
               updatedControllerFields(themeValue, 'theme');
               setSelectedTheme(themeValue);
             }}
+            currentTheme={selectedTheme}
             selectedBackground={(backgroundValue) => {
               updatedControllerFields(backgroundValue, 'background');
               setSelectedBackground(backgroundValue)
