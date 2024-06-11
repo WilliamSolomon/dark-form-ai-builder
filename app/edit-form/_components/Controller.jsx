@@ -9,8 +9,9 @@ import {
 import Themes from '../../_data/Themes'
 import GradientBg from '../../_data/GradientBg'
 import { Button } from '@/components/ui/button'
+import Styles from '../../_data/Styles'
 
-function Controller({ selectedTheme, selectedBackground, currentTheme, currentBackground }) {
+function Controller({ selectedTheme, selectedBackground, currentTheme, selectedStyle }) {
     const [indexLimit, setIndexLimit] = useState(6)
     // const [selectedOption, setSelectedOption] = useState(selectedTheme)
 
@@ -36,7 +37,7 @@ function Controller({ selectedTheme, selectedBackground, currentTheme, currentBa
                 <SelectContent>
                     {Themes.map((theme, index) => (
                         <SelectItem value={theme.theme} key={index}>
-                            
+
                             <div className='flex gap-3'>
                                 <div className='flex'>
                                     <div className='h-5 w-5 rounded-l-md'
@@ -64,7 +65,7 @@ function Controller({ selectedTheme, selectedBackground, currentTheme, currentBa
             <div className='grid grid-cols-3 gap-5'>
                 {GradientBg.map((bg, index) =>
                     (index < indexLimit) && (
-                        <div key={index} 
+                        <div key={index}
                             onClick={() => selectedBackground(bg.gradient)}
                             className='w-full h-[4.5rem] rounded-lg
                                 hover:border-2 hover:border-black
@@ -99,7 +100,31 @@ function Controller({ selectedTheme, selectedBackground, currentTheme, currentBa
                         </Button>
                     )}
                 </div>
+
+
             )}
+
+            {/* Style Selection Controller  */}
+            <div>
+                <label>Style</label>
+                <div className='grid grid-cols-3  gap-3'>
+                    {Styles.map((item, index) => (
+                        <div key={index}>
+                            <div className='cursor-pointer hover:border-2 rounded-lg' onClick={() => selectedStyle(item)}>
+                                <img src={item.img} width={600} height={80} className='rounded-lg' />
+
+                            </div>
+                            <h2 className='text-center'>{item.name}</h2>
+                        </div>
+                    ))}
+                </div>
+            </div>
+{/* 
+            <div className='flex gap-2 my-4 items-center mt-10'>
+                <Checkbox onCheckedChange={(e) => setSignInEnable(e)} /> <h2>Enable Social Authentication before submit the form</h2>
+            </div> */}
+
+
         </section>
     )
 }

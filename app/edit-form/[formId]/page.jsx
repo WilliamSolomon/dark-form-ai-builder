@@ -40,6 +40,7 @@ function EditForm({ params }) {
       setJsonForm(JSON.parse(result[0].jsonform))
       setSelectedBackground(result[0].background)
       setSelectedTheme(result[0].theme)
+      setSelectedStyle(JSON.parse(result[0].style))
 
       if (result && result.length > 0) {
         const parsedForm = JSON.parse(result[0].jsonform);
@@ -85,7 +86,7 @@ function EditForm({ params }) {
     setUpdateTrigger(Date.now);
   }
 
-  const updatedControllerFields = async (value, columnName) => {
+  const updateControllerFields = async (value, columnName) => {
     const result = await db.update(JsonForms).set({
       [columnName]: value
     }).where(and(eq(JsonForms.id, record.id), eq(JsonForms.createdBy, user?.primaryEmailAddress.emailAddress)))
@@ -105,13 +106,17 @@ function EditForm({ params }) {
         <div className='p-5 border rounded-lg shadow-md'>
           <Controller
             selectedTheme={(themeValue) => {
-              updatedControllerFields(themeValue, 'theme');
+              updateControllerFields(themeValue, 'theme');
               setSelectedTheme(themeValue);
             }}
             currentTheme={selectedTheme}
             selectedBackground={(backgroundValue) => {
-              updatedControllerFields(backgroundValue, 'background');
+              updateControllerFields(backgroundValue, 'background');
               setSelectedBackground(backgroundValue)
+            }}
+            selectedStyle={(value) => {
+              setSelectedStyle(value);
+              updateControllerFields(value, 'style')
             }}
           />
         </div>
@@ -127,7 +132,7 @@ function EditForm({ params }) {
               onFieldUpdate={onFieldUpdate}
               deleteField={(index) => deleteField(index)}
               selectedTheme={selectedTheme}
-              
+              selectedStyle={selectedStyle}
             />
           )}
         </div>
