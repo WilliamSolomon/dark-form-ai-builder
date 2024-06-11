@@ -3,7 +3,7 @@ import { db } from '@/configs'
 import { JsonForms } from '@/configs/schema'
 import { useUser } from '@clerk/nextjs'
 import { and, eq } from 'drizzle-orm'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Share2, SquareArrowOutUpRight } from 'lucide-react'
 import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -11,6 +11,8 @@ import React, { useEffect, useState } from 'react'
 
 import FormUi from '../_components/FormUi'
 import Controller from '../_components/Controller'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 function EditForm({ params }) {
   const { user } = useUser()
@@ -98,10 +100,18 @@ function EditForm({ params }) {
 
   return (
     <section className='p-10'>
+      <div className='flex justify-between items-center'>
       <h2 className='flex gap-2 items-center my-5 cursor-pointer 
       hover:font-bold' onClick={() => router.back()}>
         <ArrowLeft /> Back
       </h2>
+      <div className='flex gap-2'>
+        <Link href={'/ai-form/' + record?.id} target="_blank">
+        <Button className="flex gap-2"><SquareArrowOutUpRight className='h-5 w-5' /> Live Preview</Button>
+        </Link>
+        <Button className="flex gap-2 bg-orange-500 hover:bg-orange-400"><Share2 className='h-5 w-5' /> Share</Button>
+      </div>
+      </div>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
         <div className='p-5 border rounded-lg shadow-md'>
           <Controller
