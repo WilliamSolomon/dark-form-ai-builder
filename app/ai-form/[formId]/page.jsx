@@ -4,7 +4,11 @@ import { db } from '@/configs'
 import { JsonForms } from '@/configs/schema'
 import { eq } from 'drizzle-orm'
 import { Loader2 } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { badgeVariants } from "@/components/ui/badge"
+
 
 function LiveAiForm({ params }) {
     const [record, setRecord] = useState();
@@ -30,8 +34,6 @@ function LiveAiForm({ params }) {
 
             if (result && result.length > 0) {
 
-                console.log("GetFormData", result);
-
                 setRecord(result[0]);
                 setJsonForm(JSON.parse(result[0].jsonform))
 
@@ -50,8 +52,8 @@ function LiveAiForm({ params }) {
 
 
     return (
-        <div className='p-10 flex justify-center'
-        style={{ backgroundImage: record?.background }}
+        <div className='p-10 flex justify-center items-center h-screen'
+            style={{ backgroundImage: record?.background }}
         >
             {record && jsonForm.fields ? (
                 <FormUi
@@ -67,6 +69,17 @@ function LiveAiForm({ params }) {
                     <Loader2 className="animate-spin" size={32} />
                 </div>
             )}
+            <Link className={`flex gap-2 items-center
+         px-3 py-1 rounded-full
+            fixed bottom-5 left-5 cursor-pointer 
+            ${badgeVariants({ variant: "secondary" })}`}
+
+    
+            href={'/'}
+            >
+                <Image src={'/zapdoc-logo-icon.svg'} width={16} height={16}  />
+                Build a custom form with AI
+            </Link>
         </div>
     )
 }
