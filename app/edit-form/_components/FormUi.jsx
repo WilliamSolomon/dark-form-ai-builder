@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react'
+import { db } from '@/configs'
+import { userResponses } from '@/configs/schema'
 import { Input } from '@/components/ui/input'
 import {
     Select,
@@ -24,41 +26,90 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
     const [formData, setFormData] = useState();
     let formRef = useRef();
     const { user, isSignedIn } = useUser();
-    // const handleInputChange = (event) => {
-    //     const { name, value } = event.target;
-    //     setFormData({
-    //         ...formData,
-    //         [name]: value
-    //     })
-    // }
 
-    // const handleSelectChange = (name, value) => {
-    //     setFormData({
-    //         ...formData,
-    //         [name]: value
-    //     })
-    // }
+    console.log("Initial jsonForm Data:", jsonForm);
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+
+        console.log("handleInputChange ", "event: ", event, "event.target: ", event.target, "name: ", name, "value: ", value);
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+
+        console.log("formData: ", formData);
+    }
+
+    const handleSelectChange = (name, value) => {
+
+        console.log("handleSelectChange ", "name: ", name, "value: ", value);
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+        console.log("formData: ", formData);
+    }
+
+    const handleCheckBoxChange = (fieldName, item, value) => {
+
+        // Change field name to lowercase to maintain consistency for column titles
+        fieldName = fieldName.toLowerCase()
+        const list = formData?.[fieldName] ? formData?.[fieldName] : [];
+        
+
+        console.log("handleCheckBoxChange ", "fieldName: ", fieldName, "item: ", item, "value: ", value, "List", list);
+
+        if (value) {
+            list.push({
+                label: item,
+                value: value
+            })
+            setFormData({
+                ...formData,
+                [fieldName]: list
+            })
+        }
+
+        else {
+            const result = list.filter((item) => item.label == item);
+            setFormData({
+                ...formData,
+                [fieldName]: result
+            })
+        }
+
+        console.log("formData: ", formData);
+    }
 
     const onFormSubmit = async (event) => {
         event.preventDefault()
-        console.log(formData);
+        console.log('onFormSubmit: formData', formData);
 
-        const result = await db.insert(userResponses)
+        if(formData) {
+            const result = await db.insert(userResponses)
             .values({
                 jsonResponse: formData,
-                createdAt: moment().format('DD/MM/yyy'),
-                formRef: formId
+                createdAt: moment().format('DD/MM/YYYY')
+                //, formRef: formId
             })
 
-        if (result) {
-            formRef.reset();
-            toast('Response Submitted Successfully !')
-        }
-        else {
-            toast('Error while saving your form !')
+            if (result) {
+                formRef.reset();
+                toast('Response Submitted Successfully !')
+            }
+            else {
+                toast('Error while saving your form !')
+    
+            }
 
+        } else {
+            console.log('No formData')
         }
+
     }
+
+
 
 
 
@@ -82,7 +133,7 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
                     {field.field_type == 'select' ?
                         <div className="my-3 w-full">
                             <label className="text-sm text-gray-500">{field.label}</label>
-                            <Select>
+                            <Select required={field?.required} onValueChange={(value) => handleSelectChange(field.name, value)}>
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder={field.placeholder} />
                                 </SelectTrigger>
@@ -97,13 +148,16 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
                         : field.field_type == 'radio' ?
                             <div className="my-3 w-full">
                                 <label className="text-sm text-gray-500">{field.label}</label>
-                                <RadioGroup>
+                                <RadioGroup required={field?.required}>
                                     {/* <RadioGroup defaultValue={option.label}> */}
 
                                     {field.options.map((item, index) => (
 
                                         <div key={index} className="flex items-center space-x-2">
-                                            <RadioGroupItem value={item} id={item} />
+                                            <RadioGroupItem
+                                                value={item} id={item}
+                                                onClick={() => handleSelectChange(field.name, item)}
+                                            />
                                             <Label htmlFor={item} > {item} </Label>
                                         </div>
                                     ))}
@@ -121,7 +175,11 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
                                         {field.options.map((item, index) => (
                                             <div key={index} className="flex items-center space-x-2">
                                                 <div className='flex gap-2 items-center'>
-                                                    <Checkbox />
+                                                    <Checkbox
+                                                        // required={field?.required}
+                                                        onCheckedChange={(value) => handleCheckBoxChange(field.label, item, value)}
+                                                    />
+                                                    {console.log("Checkbox, field name", field.label)}
                                                     <h2>{item}</h2>
                                                 </div>
                                             </div>
@@ -129,7 +187,7 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
                                     </div>
                                 )
                                     : <div className="flex my-3 gap-2 w-full">
-                                        <Checkbox className="gap-2" />
+                                        <Checkbox className="gap-2" required={field?.required} />
                                         <label className="text-sm text-gray-500 gap-2">{field.label}</label>
                                     </div>
                                 : <div key={index} className="my-3 items-center w-full">
@@ -137,8 +195,11 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
                                     <Input
                                         type={field.field_type}
                                         id={field.name}
+                                        name={field.name}
                                         placeholder={field.placeholder}
-                                        required={field.required}
+                                        required={field?.required}
+                                        className="bg-transparent"
+                                        onChange={(event) => handleInputChange(event)}
                                     />
                                 </div>
                     }
@@ -155,7 +216,7 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
             {!enabledSignIn ?
                 <button className='btn btn-primary'>Submit</button> :
                 isSignedIn ?
-                    <button className='btn btn-primary'>Submit</button> :
+                    <button type='submit' className='btn btn-primary'>Submit</button> :
                     <Button>
                         <SignInButton mode='modal' >Sign In before Submit</SignInButton>
                     </Button>}
@@ -165,3 +226,4 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
 }
 
 export default FormUi
+
