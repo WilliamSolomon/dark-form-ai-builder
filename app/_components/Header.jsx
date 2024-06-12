@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button'
 import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import React from 'react'
 
 function Header() {
     const { user, isSignedIn } = useUser();
+    const path=usePathname();
 
-    return (
+    return !path.includes('ai-form') && (
         <nav className='p-5 border-b shadow-sm'>
             <div className='flex items-center justify-between'>
                 <Image src={'/zapdoc-logo.svg'} width={120} height={50} alt='logo' />
