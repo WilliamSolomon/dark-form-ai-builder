@@ -52,7 +52,7 @@ function LiveAiForm({ params }) {
 
 
     return (
-        <div className='p-10 flex justify-center items-center h-screen'
+        <div className='p-10 flex justify-center items-center '
             style={{ backgroundImage: record?.background }}
         >
             {record && jsonForm.fields ? (
@@ -70,14 +70,14 @@ function LiveAiForm({ params }) {
                 </div>
             )}
             <Link className={`flex gap-2 items-center
-         px-3 py-1 rounded-full
+            px-3 py-1 rounded-full
             fixed bottom-5 left-5 cursor-pointer 
             ${badgeVariants({ variant: "secondary" })}`}
 
-    
-            href={'/'}
+
+                href={'/'}
             >
-                <Image src={'/zapdoc-logo-icon.svg'} width={16} height={16}  />
+                <Image src={'/zapdoc-logo-icon.svg'} width={16} height={16} />
                 Build a custom form with AI
             </Link>
         </div>
