@@ -39,6 +39,7 @@ function LiveAiForm({ params }) {
 
                 // const parsedForm = JSON.parse(result[0].jsonform);
                 // setJsonForm(parsedForm);
+        
             } else {
                 console.log("No form data found");
             }
@@ -52,7 +53,7 @@ function LiveAiForm({ params }) {
 
 
     return (
-        <div className='p-10 flex justify-center items-center '
+        <div className='p-10 flex justify-center items-center min-h-screen'
             style={{ backgroundImage: record?.background }}
         >
             {record && jsonForm.fields ? (
@@ -63,6 +64,7 @@ function LiveAiForm({ params }) {
                     onFieldUpdate={() => console.log}
                     deleteField={() => console.log}
                     editable={false}
+                    formId={record.id}
                 />
             ) : (
                 <div className="flex items-center justify-center h-screen">

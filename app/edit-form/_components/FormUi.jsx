@@ -56,7 +56,7 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
         // Change field name to lowercase to maintain consistency for column titles
         fieldName = fieldName.toLowerCase()
         const list = formData?.[fieldName] ? formData?.[fieldName] : [];
-        
+
 
         console.log("handleCheckBoxChange ", "fieldName: ", fieldName, "item: ", item, "value: ", value, "List", list);
 
@@ -84,15 +84,15 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
 
     const onFormSubmit = async (event) => {
         event.preventDefault()
-        console.log('onFormSubmit: formData', formData);
 
-        if(formData) {
+        if (formData) {
             const result = await db.insert(userResponses)
-            .values({
-                jsonResponse: formData,
-                createdAt: moment().format('DD/MM/YYYY')
-                //, formRef: formId
-            })
+
+                .values({
+                    jsonResponse: formData,
+                    createdAt: moment().format('DD/MM/YYYY'),
+                    formRef: formId
+                })
 
             if (result) {
                 formRef.reset();
@@ -100,7 +100,7 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
             }
             else {
                 toast('Error while saving your form !')
-    
+
             }
 
         } else {
@@ -116,7 +116,9 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
 
     return (
         <form
-            ref={(event) => formRef = event}
+            ref={(event) => {
+                formRef = event
+            }}
             onSubmit={onFormSubmit}
             className='border p-5 md:w-[37.5rem] rounded-lg'
             data-theme={selectedTheme}
