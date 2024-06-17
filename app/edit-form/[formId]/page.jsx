@@ -143,6 +143,7 @@ function EditForm({ params }) {
               deleteField={(index) => deleteField(index)}
               selectedTheme={selectedTheme}
               selectedStyle={selectedStyle}
+              formId={record.id}
             />
           )}
         </div>

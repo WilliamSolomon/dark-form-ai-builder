@@ -1,6 +1,6 @@
 const { pgTable, serial, text, varchar, integer } = require("drizzle-orm/pg-core");
 
-export const JsonForms=pgTable('forms', {
+export const JsonForms=pgTable('jsonForms', {
     id:serial('id').primaryKey(),
     jsonform:text('jsonform').notNull(),
     theme:varchar('theme'),
