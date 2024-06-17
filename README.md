@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+<img width="1022" alt="image" src="https://github.com/WilliamSolomon/zapdoc-ai-form-builder/assets/54815679/554d6b3e-02cc-41b6-9c49-5cc812f397ab">
+
 ## Getting Started
 
 First, run the development server:
