@@ -18,22 +18,23 @@ import { db } from '@/configs'
 import { JsonForms } from '@/configs/schema'
 import { and, eq } from 'drizzle-orm'
 import { toast } from 'sonner'
+import { RWebShare } from 'react-web-share'
 
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
-function FormListItem({ jsonForm,recordId,refreshData }) {
+function FormListItem({ jsonForm, recordId, refreshData }) {
     const { user } = useUser();
 
     const onDeleteForm = async () => {
         const result = await db.delete(JsonForms)
-        .where(and(eq(JsonForms.id, recordId),
-            eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)
-        ))
+            .where(and(eq(JsonForms.id, recordId),
+                eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)
+            ))
 
-        if(result)
-            {
-                toast("Form Deleted");
-                refreshData();
-            }
+        if (result) {
+            toast("Form Deleted");
+            refreshData();
+        }
     }
 
 
@@ -44,7 +45,7 @@ function FormListItem({ jsonForm,recordId,refreshData }) {
                 <AlertDialog>
                     <AlertDialogTrigger asChild>
                         <Trash className='h-5 w-5 text-red-600
-                        cursor-pointer hover:scale-105 transition-all' 
+                        cursor-pointer hover:scale-105 transition-all'
                         />
                     </AlertDialogTrigger>
                     <AlertDialogContent>
@@ -56,7 +57,7 @@ function FormListItem({ jsonForm,recordId,refreshData }) {
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={()=>onDeleteForm()}>
+                            <AlertDialogAction onClick={() => onDeleteForm()}>
                                 Continue</AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
@@ -67,7 +68,18 @@ function FormListItem({ jsonForm,recordId,refreshData }) {
             <h3 className='text-sm text-gray-500'>{jsonForm.form_subheading}</h3>
             <hr className='my-4'></hr>
             <div className='flex justify-between'>
-                <Button variant='outline' size='sm' className='flex gap-2' ><Share className='h-5 w-5' />Share</Button>
+
+                <RWebShare
+                    data={{
+                        text: jsonForm.form_subheading + " , Build your form in seconds with ZapDocs",
+                        url: baseURL + "ai-form/" + recordId,
+                        title: jsonForm.form_title,
+                    }}
+                    onClick={() => console.log("shared successfully!")}
+                >
+                    <Button variant='outline' size='sm' className='flex gap-2' ><Share className='h-5 w-5' />Share</Button>
+                </RWebShare>
+
                 {console.log(recordId)}
                 <Link href={'/edit-form/' + recordId}>
                     <Button size='sm' className='flex gap-2'><Edit className='h-5 w-5' />Edit</Button>
