@@ -79,8 +79,6 @@ function FormListItem({ jsonForm, recordId, refreshData }) {
                 >
                     <Button variant='outline' size='sm' className='flex gap-2' ><Share className='h-5 w-5' />Share</Button>
                 </RWebShare>
-
-                {console.log(recordId)}
                 <Link href={'/edit-form/' + recordId}>
                     <Button size='sm' className='flex gap-2'><Edit className='h-5 w-5' />Edit</Button>
                 </Link>
