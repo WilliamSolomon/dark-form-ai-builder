@@ -141,6 +141,9 @@ function EditForm({ params }) {
               setSelectedStyle(value);
               updateControllerFields(value, 'style')
             }}
+            setSignInEnabled={(signInValue)=>{
+              updateControllerFields(signInValue, 'enableSignIn');
+            }}
           />
         </div>
 
