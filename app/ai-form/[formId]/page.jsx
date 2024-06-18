@@ -65,6 +65,7 @@ function LiveAiForm({ params }) {
                     deleteField={() => console.log}
                     editable={false}
                     formId={record.id}
+                    requiredSignIn={record?.requireSignIn}
                 />
             ) : (
                 <div className="flex items-center justify-center h-screen">

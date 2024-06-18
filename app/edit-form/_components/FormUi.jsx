@@ -22,7 +22,7 @@ import { toast } from 'sonner'
 
 
 function FormUi({ jsonForm, selectedTheme, selectedStyle,
-    onFieldUpdate, deleteField, editable = true, formId = 0, enabledSignIn = false }) {
+    onFieldUpdate, deleteField, editable = true, formId = 0, requiredSignIn = false }) {
     const [formData, setFormData] = useState();
     let formRef = useRef();
     const { user, isSignedIn } = useUser();
@@ -215,7 +215,7 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
                     </div>
                 </div>
             ))}
-            {!enabledSignIn ?
+            {!requiredSignIn ?
                 <button className='btn btn-primary'>Submit</button> :
                 isSignedIn ?
                     <button type='submit' className='btn btn-primary'>Submit</button> :

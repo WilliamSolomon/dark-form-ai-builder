@@ -124,7 +124,7 @@ function Controller({ selectedTheme, selectedBackground, currentTheme, selectedS
             <div className='flex gap-2 my-4 items-center mt-10'>
                 <Checkbox
                     onCheckedChange={(event) => setSignInEnabled(event)}
-                /> <h2>Require Social Authentication before submit the form</h2>
+                /> <h2>Require Social Authentication(Facebook/Google) before submitting the form</h2>
             </div>
 
 
