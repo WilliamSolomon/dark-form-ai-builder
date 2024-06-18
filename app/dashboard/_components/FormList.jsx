@@ -28,7 +28,6 @@ function FormList() {
             }));
     
             setFormList(parsedResult);
-            console.log("FormList", parsedResult);
         } catch (error) {
             console.error("Error fetching form list:", error);
         }
