@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { db } from '@/configs'
-import { userResponses } from '@/configs/schema'
+import { UserResponses } from '@/configs/schema'
 import { Input } from '@/components/ui/input'
 import {
     Select,
@@ -86,7 +86,7 @@ function FormUi({ jsonForm, selectedTheme, selectedStyle,
         event.preventDefault()
 
         if (formData) {
-            const result = await db.insert(userResponses)
+            const result = await db.insert(UserResponses)
 
                 .values({
                     jsonResponse: formData,
