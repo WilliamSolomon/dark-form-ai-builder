@@ -10,8 +10,9 @@ import Themes from '../../_data/Themes'
 import GradientBg from '../../_data/GradientBg'
 import { Button } from '@/components/ui/button'
 import Styles from '../../_data/Styles'
+import { Checkbox } from '@/components/ui/checkbox'
 
-function Controller({ selectedTheme, selectedBackground, currentTheme, selectedStyle }) {
+function Controller({ selectedTheme, selectedBackground, currentTheme, selectedStyle, setSignInEnabled }) {
     const [indexLimit, setIndexLimit] = useState(6)
     // const [selectedOption, setSelectedOption] = useState(selectedTheme)
 
@@ -119,10 +120,12 @@ function Controller({ selectedTheme, selectedBackground, currentTheme, selectedS
                     ))}
                 </div>
             </div>
-{/* 
+
             <div className='flex gap-2 my-4 items-center mt-10'>
-                <Checkbox onCheckedChange={(e) => setSignInEnable(e)} /> <h2>Enable Social Authentication before submit the form</h2>
-            </div> */}
+                <Checkbox
+                    onCheckedChange={(event) => setSignInEnabled(event)}
+                /> <h2>Require Social Authentication before submit the form</h2>
+            </div>
 
 
         </section>
