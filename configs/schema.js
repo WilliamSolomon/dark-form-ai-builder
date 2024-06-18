@@ -15,5 +15,5 @@ export const UserResponses=pgTable('userResponses',{
     jsonResponse:text('jsonResponse').notNull(),
     createdBy:varchar('createdBy').default('anonymous'),
     createdAt:varchar('createdAt').notNull(),
-    formRef:integer('formRef').references(()=>JsonForms.id)
-})
+    formRef:integer('formRef').references(()=>JsonForms.id, {onDelete: 'cascade'}) 
+});
