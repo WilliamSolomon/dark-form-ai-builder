@@ -5,7 +5,7 @@ import FormList from './_components/FormList'
 
 function Dashboard() {
     return (
-        <div className='p-10'>
+        <div className='p-10 min-h-screen'>
             <h2 className='font-bold text-3xl flex items-center justify-between'>Dashboard
                 <CreateForm />
             </h2>
