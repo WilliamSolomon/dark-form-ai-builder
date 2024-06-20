@@ -13,7 +13,7 @@ function Header() {
     return !path.includes('ai-form') && (
         <nav className='p-5 border-b shadow-sm'>
             <div className='flex items-center justify-between'>
-                <Image src={'/zapdoc-logo.svg'} width={120} height={50} alt='logo' />
+                <Image src={'/darkform-logo-icon.svg'} width={120} height={50} alt='logo' />
                 {isSignedIn ?
                     <div className='flex items-center gap-5'>
                         <Link href={'/dashboard'}>

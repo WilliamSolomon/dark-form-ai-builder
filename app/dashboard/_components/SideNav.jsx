@@ -29,12 +29,12 @@ function SideNav() {
             icon: MessageSquare,
             path: '/dashboard/responses'
         },
-        {
-            id: 3,
-            name: 'Analytics',
-            icon: LineChart,
-            path: '/dashboard/analytics'
-        },
+        // {
+        //     id: 3,
+        //     name: 'Analytics',
+        //     icon: LineChart,
+        //     path: '/dashboard/analytics'
+        // },
         {
             id: 4,
             name: 'Upgrade',
@@ -96,7 +96,7 @@ function SideNav() {
                     </Progress.Root>
 
                     <h2 className='text-sm mt-2 text-gray-600'><strong>{formCount}</strong> out of <strong>3</strong> files created</h2>
-                    <h2 className='text-xs mt-3 text-gray-600'>Upgrade your plan for <strong>unlimited</strong> ZapDocs!</h2>
+                    <h2 className='text-xs mt-3 text-gray-600'>Upgrade your plan for <strong>unlimited</strong> Dark Forms!</h2>
                 </div>
             </div>
         </div>
