@@ -45,7 +45,9 @@ function Responses() {
     }
 
     return (
-        <div className='p-10'>
+        <div className='p-10' style={{ minHeight: `calc(100vh - 110.414px)` }}
+        //min-h-screen' // Property is not taking into account the Header height
+        >
             <h2 className='font-bold text-3xl flex items-center justify-between my-5'>Responses</h2>
 
             <div className='grid grid-cols-2 lg:grid-cols-3 gap-5'>

@@ -71,7 +71,7 @@ function FormListItem({ jsonForm, recordId, refreshData }) {
 
                 <RWebShare
                     data={{
-                        text: jsonForm.form_subheading + " , Build your form in seconds with ZapDocs",
+                        text: jsonForm.form_subheading + " , Build your form in seconds with Dark Form AI",
                         url: baseURL + "ai-form/" + recordId,
                         title: jsonForm.form_title,
                     }}
