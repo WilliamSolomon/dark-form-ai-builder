@@ -55,7 +55,7 @@ https://dark-form-ai-builder.vercel.app/
 <img width="1232" alt="darkformAIdashboard" src="https://github.com/WilliamSolomon/dark-form-ai-builder/assets/54815679/fda5dc6b-f37a-476d-ba1e-7482146fcf80">
 
 
-## Results Page
+## Responses Page
 <img width="1236" alt="darkformAIresponses" src="https://github.com/WilliamSolomon/dark-form-ai-builder/assets/54815679/01602da2-9af5-4590-9e39-b217cdad219a">
 
 ## Next Steps
