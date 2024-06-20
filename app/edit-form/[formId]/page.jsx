@@ -114,7 +114,7 @@ function EditForm({ params }) {
         </Link>
         <RWebShare
                     data={{
-                        text: jsonForm?.form_subheading + " , Build your form in seconds with ZapDocs",
+                        text: jsonForm?.form_subheading + " , Build your form in seconds with Dark Form AI",
                         url: baseURL + "ai-form/" + record.id,
                         title: jsonForm?.form_title,
                     }}

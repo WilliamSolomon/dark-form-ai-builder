@@ -8,7 +8,9 @@ function Upgrade() {
 
 
     return (
-        <div className='p-10'>
+        <div className='p-10' style={{ minHeight: `calc(100vh - 110.414px)` }}
+        //min-h-screen' // Property is not taking into account the Header height
+        >
             <h2 className='font-bold text-3xl flex items-center justify-between my-5'>Upgrade</h2>
             <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center md:gap-8">
