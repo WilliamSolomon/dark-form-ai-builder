@@ -1,39 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Dark Form AI Form Builder
 
-<img width="1022" alt="image" src="https://github.com/WilliamSolomon/zapdoc-ai-form-builder/assets/54815679/554d6b3e-02cc-41b6-9c49-5cc812f397ab">
+An AI-powered form builder application created with Next.js, Next-auth, Shadcn UI, Gemini AI API, Drizzle, PostgreSQL, and TypeScript. This app allows users to generate custom forms via prompts and publish them for others to complete. Form admins can access and review all submitted responses.
 
-## Getting Started
+<img width="737" alt="DarkFormAILanding" src="https://github.com/WilliamSolomon/dark-form-ai-builder/assets/54815679/a5f62b00-15e4-4036-a17f-650160778e5e">
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **AI-Powered Form Creation: Generate form fields automatically by providing simple prompts.
+- **Authentication: Secure user authentication with Next-auth for account management.
+- **Responsive Design: Shadcn UI ensures the application looks great on all devices.
+- **Admin Dashboard: Admin users can view all responses to their forms.
+- **Persistent Data Storage: Securely store form data, user information, and responses in PostgreSQL.
+- **Theme Customization: Choose from six different themes to customize the app's appearance.
+- **Type Safety: TypeScript ensures robust type safety and code maintainability.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Technologies Used
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Next.js: React framework for server-side rendered (SSR) and static web applications.
+Clerk: Comprehensive authentication solution for Next.js.
+Shadcn UI: Framework for building responsive web interfaces.
+Gemini AI API: Integrate AI capabilities into the application.
+Drizzle ORM: Simplifies database interactions with object-relational mapping.
+PostgreSQL: Powerful open-source relational database system.
+TypeScript: Statically typed JavaScript superset for type safety.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Get Started
+1. **Clone the repository:**
 
-## Learn More
+   ```bash
+   git clone https://github.com/WilliamSolomon/dark-form-ai-builder.git
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install Dependencies:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   cd your_repo
+   npm intall
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Set Up Environment Variables:**
 
-## Deploy on Vercel
+   ```bash
+    GEMINI_API_KEY=
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
+    AUTH_SECRET=
+    DATABASE_URL=
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Live App
+https://dark-form-ai-builder.vercel.app/
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# dark-form-ai-form-builder
+## Dashboard
+<img width="1232" alt="darkformAIdashboard" src="https://github.com/WilliamSolomon/dark-form-ai-builder/assets/54815679/fda5dc6b-f37a-476d-ba1e-7482146fcf80">
+
+
+## Results Page
+<img width="1236" alt="darkformAIresponses" src="https://github.com/WilliamSolomon/dark-form-ai-builder/assets/54815679/01602da2-9af5-4590-9e39-b217cdad219a">
+
+## Next Steps
+- **Enable Themes**: Implement and activate theme customization to allow users to switch between the six available themes.
+- **Flesh Out Site Copy**: Review and complete all textual content throughout the application to ensure clear and consistent communication.
+- **Responsiveness Check**: Ensure the site is fully responsive by testing it at three different breakpoints (e.g., mobile, tablet, and desktop) to provide an optimal user experience across all devices.
+- **Add Functionality** to Buttons and Navigation: Ensure all buttons and navigation links are fully functional and lead to the appropriate pages or actions.
+- **Form Validation**: Implement comprehensive form validation to improve user experience and data integrity.
+- **Testing and QA**: Conduct thorough testing and quality assurance to identify and fix any bugs or performance issues.
+- **Accessibility** Improvements: Enhance the application's accessibility features to ensure it is usable by people with disabilities.
+- **Documentation**: Create detailed documentation for developers and users to facilitate easier onboarding and usage.
+    
+
+
